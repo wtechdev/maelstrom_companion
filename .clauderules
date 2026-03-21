@@ -1,0 +1,41 @@
+# Claude Code Project Rules & Workflow
+
+## 1. Workflow Orchestration
+- **Plan Node Default**: Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions).
+- **Re-planning**: If something goes sideways, STOP and re-plan immediately – don't keep pushing.
+- **Verification**: Use plan mode for verification steps, not just building.
+- **Specs**: Write detailed specs upfront to reduce ambiguity.
+- **Subagent Strategy**: Use subagents liberally for research or parallel analysis to keep the main context window clean. One task per subagent.
+
+## 2. Git & Commit Governance
+- **No Auto-Commits**: NEVER execute automatic commits or pushes. The user must always give explicit approval for every commit or push.
+- **Scope Rigidity**: Implement changes based ONLY on the actual code present in the project. Avoid assumptions based on external standards unless explicitly requested.
+
+## 3. Changelog & Versioning
+- **Branch Workflow**: When on a feature/bugfix branch, update `CHANGELOG-[branch-name].md` in the root. Use [Keep a Changelog](https://keepachangelog.com/) format.
+- **Main Workflow**: If working directly on main, update the `[Unreleased]` section of `CHANGELOG.md`.
+- **Merge/PR**: Upon merging, integrate branch-specific changelogs into the main `CHANGELOG.md` ([Unreleased] section) and delete the temporary file.
+- **Versioning (X.Y.Z)**:
+  - **Z**: Automatic progressive sub-release of the day.
+  - **Y**: Automatic release for the workday.
+  - **X**: Software version (Manual: ask the user before incrementing).
+
+## 4. Documentation & Task Management
+- **Functional Analysis**: Create a functional analysis `.md` file in `/docs` for every platform function.
+- **Feature TODOs**: For major implementations, create a specific `TODO.md` in `/docs`. Use it to track progress and re-read it after context compression to prevent information loss.
+- **Self-Improvement**: After any correction, update `tasks/lessons.md` with the pattern to prevent repeating mistakes.
+
+## 5. Technical Standards & Tooling
+- **PHP Standards**: Type-hint all inputs and outputs following **PHP 8.4** standards, even if the project uses an older version.
+- **Comments**: All code documentation (PHPDoc) must be written in **ITALIAN**.
+- **Laravel Ecosystem**:
+  - Use `laravel-boost` as MCP.
+  - Always run code style checks with **Laravel Pint** (install it if missing).
+- **Database**: Use **Tinker** to modify and test local database queries. Create migrations only before the final commit.
+- **Testing**: Create unit tests for every new feature. Always run and pass tests before marking a task as complete.
+- **Testing Framework**: Unit tests must be written in **Pest** format and configured to use **SQLite** (in-memory or file-based).
+
+## 6. Core Principles
+- **Simplicity First**: Make every change as simple as possible. Minimal impact.
+- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
+- **Verification Before Done**: Never mark a task complete without proving it works via tests, logs, and manual verification. Ask: "Would a staff engineer approve this?"

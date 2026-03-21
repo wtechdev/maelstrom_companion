@@ -138,7 +138,7 @@ class _Griglia extends StatelessWidget {
   Widget build(BuildContext context) {
     const double colW = 44;
     const double progettoW = 90;
-    final giorni = WeekScreen._giorniShort.sublist(0, 5); // lun-ven
+    final giorni = WeekScreen._giorniShort; // lun-dom
 
     final headerStyle = TextStyle(
       fontSize: 10,
@@ -196,7 +196,7 @@ class _Griglia extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  for (var i = 0; i < 5; i++)
+                  for (var i = 0; i < 7; i++)
                     SizedBox(
                       width: colW,
                       child: Text(
@@ -234,7 +234,7 @@ class _Griglia extends StatelessWidget {
                           fontSize: 11, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  for (var i = 0; i < 5; i++)
+                  for (var i = 0; i < 7; i++)
                     SizedBox(
                       width: colW,
                       child: Text(

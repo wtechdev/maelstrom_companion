@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'api_exception.dart';
+import '../models/pending_timer_entry.dart';
 import '../models/project.dart';
 import '../models/timesheet_entry.dart';
 import '../models/timer_status.dart';
@@ -111,11 +112,38 @@ class ApiClient {
 
   Future<TimerStatus> startTimer(int projectId) async {
     final data = await _post('/api/v1/me/timer/start', {'project_id': projectId});
-    final payload = data['data'] as Map<String, dynamic>? ?? data;
-    return TimerStatus.fromJson(payload);
+    // La risposta ha {"success":true,"timer":{...}} senza "active"
+    // Costruiamo TimerStatus direttamente dal campo "timer"
+    final timerMap = data['timer'] as Map<String, dynamic>?;
+    return TimerStatus(
+      attivo: true,
+      progettoId: timerMap?['project_id'] as int?,
+      iniziato: timerMap?['started_at'] != null
+          ? DateTime.parse(timerMap!['started_at'] as String)
+          : DateTime.now(),
+    );
   }
 
-  Future<void> stopTimer() => _post('/api/v1/me/timer/stop');
+  Future<PendingTimerEntry> stopTimer({String? progettoNome}) async {
+    final data = await _post('/api/v1/me/timer/stop');
+    return PendingTimerEntry.fromJson(data, progettoNome: progettoNome);
+  }
+
+  Future<void> salvaTimeEntry({
+    required int projectId,
+    required double ore,
+    required DateTime data,
+    required String tipoAttivita,
+    String? descrizione,
+  }) async {
+    await _post('/api/v1/me/timesheet', {
+      'project_id': projectId,
+      'data': '${data.year}-${data.month.toString().padLeft(2, '0')}-${data.day.toString().padLeft(2, '0')}',
+      'ore': ore,
+      'tipo_attivita': tipoAttivita,
+      if (descrizione != null && descrizione.isNotEmpty) 'descrizione': descrizione,
+    });
+  }
 
   void dispose() => _http.close();
 }

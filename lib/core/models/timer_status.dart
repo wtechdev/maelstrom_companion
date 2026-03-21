@@ -12,13 +12,14 @@ class TimerStatus {
   factory TimerStatus.inattivo() => const TimerStatus(attivo: false);
   factory TimerStatus.fromJson(Map<String, dynamic> json) {
     final running = (json['active'] ?? json['running']) as bool? ?? false;
+    // Il backend annida i dati del timer in json['timer']
+    final timerMap = json['timer'] as Map<String, dynamic>?;
+    final startedAtStr = (timerMap?['started_at'] ?? json['started_at']) as String?;
     return TimerStatus(
       attivo: running,
-      progettoId: json['project_id'] as int?,
+      progettoId: (timerMap?['project_id'] ?? json['project_id']) as int?,
       progettoNome: json['project_name'] as String?,
-      iniziato: json['started_at'] != null
-          ? DateTime.parse(json['started_at'] as String)
-          : null,
+      iniziato: startedAtStr != null ? DateTime.parse(startedAtStr) : null,
     );
   }
   Duration get elapsed =>

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const double windowWidth = 410;
+  static const double windowWidth = 480;
   static const double windowHeight = 580;
   static const double tabBarHeight = 48;
   static const EdgeInsets paddingPagina = EdgeInsets.all(16);

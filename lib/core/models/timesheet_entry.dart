@@ -36,7 +36,7 @@ class TimesheetEntry {
       id: json['id'] as int,
       progetto: project?['name'] as String? ?? '-',
       data: DateTime.parse(json['data'] as String),
-      ore: (json['ore'] as num).toDouble(),
+      ore: json['ore'] is num ? (json['ore'] as num).toDouble() : double.tryParse(json['ore']?.toString() ?? '') ?? 0.0,
       descrizione: json['descrizione'] as String?,
     );
   }

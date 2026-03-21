@@ -1,6 +1,6 @@
 // Struttura API week:
 // { weekStart, weekEnd, days:[date...], projects:[{id,name}],
-//   grid:{project_id:{date:{ore,...}}}, dayTotals:{date:ore}, weekTotal }
+//   grid:{project_id:{date:ore_float}}, dayTotals:{date:ore}, weekTotal }
 
 class WeekProjectRow {
   final String progetto;
@@ -39,11 +39,12 @@ class WeekSummary {
     final righe = projects.map((p) {
       final pMap = p as Map<String, dynamic>;
       final pId = pMap['id'].toString();
-      final projGrid = grid[pId] as Map<String, dynamic>? ?? {};
+      final projGrid = (grid[pId] is Map) ? (grid[pId] as Map).cast<String, dynamic>() : <String, dynamic>{};
       final minutiPerGiorno = days.map((d) {
-        final entry = projGrid[d] as Map<String, dynamic>?;
-        if (entry == null) return 0;
-        return ((entry['ore'] as num).toDouble() * 60).round();
+        final raw = projGrid[d];
+        if (raw == null) return 0;
+        final ore = raw is num ? raw.toDouble() : double.tryParse(raw.toString()) ?? 0.0;
+        return (ore * 60).round();
       }).toList();
       final totale = minutiPerGiorno.fold(0, (a, b) => a + b);
       return WeekProjectRow(
@@ -54,7 +55,8 @@ class WeekSummary {
     }).toList();
 
     final totaliGiornalieri = days.map((d) {
-      final ore = (dayTotals[d] as num?)?.toDouble() ?? 0.0;
+      final raw = dayTotals[d];
+      final ore = raw is num ? raw.toDouble() : double.tryParse(raw?.toString() ?? '') ?? 0.0;
       return (ore * 60).round();
     }).toList();
 

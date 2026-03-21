@@ -9,7 +9,7 @@ class HomeShell extends StatelessWidget {
 
   static const _tabs = [
     (label: 'Progetto', icon: Icons.folder_outlined),
-    (label: 'Timer', icon: Icons.play_circle_outline),
+    (label: 'Registra', icon: Icons.play_circle_outline),
     (label: 'Oggi', icon: Icons.today_outlined),
     (label: 'Settimana', icon: Icons.calendar_view_week_outlined),
   ];

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Genera lo sfondo PNG brandizzato per il DMG di Maelstrom Companion."""
 
+import sys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -48,6 +49,7 @@ def main() -> None:
         font_titolo = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 64)
         font_istruzione = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 28)
     except OSError:
+        print("ATTENZIONE: font Helvetica non trovato, uso font di default (qualità ridotta).", file=sys.stderr)
         font_titolo = ImageFont.load_default()
         font_istruzione = ImageFont.load_default()
 

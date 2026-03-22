@@ -9,6 +9,18 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [0.1.0-beta.2] — 2026-03-22
+
+### Aggiunto
+- **Icona app**: brandmark W-Tech a colori sostituisce l'icona placeholder Flutter
+
+### Corretto
+- **CI**: rimosso `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24` che causava il fallimento della beta 1 (le action `checkout@v4` non supportano ancora Node.js 24)
+- **CI**: aggiunto `--break-system-packages` a `pip3 install Pillow` per compatibilità con macOS runner GitHub Actions
+- **CI**: aggiunto step di verifica esistenza DMG dopo creazione
+
+---
+
 ## [0.1.0-beta.1] — 2026-03-22
 
 ### Aggiunto

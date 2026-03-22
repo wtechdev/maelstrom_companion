@@ -9,6 +9,16 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [0.1.0-beta.1] — 2026-03-22
+
+### Aggiunto
+- **DMG Installer**: distribuzione tramite DMG brandizzato macOS
+- **CI/CD GitHub Actions**: build automatica ad ogni push su `master` (nightly artifact) e ad ogni tag `v*.*.*` (GitHub Release con DMG allegato)
+- **Sfondo brandizzato DMG**: generato via script Python con Pillow, gradiente scuro Maelstrom, testo "Maelstrom Companion" e istruzione di installazione
+- **Script build locale**: `installer/build_dmg.sh` per creare il DMG in locale senza CI
+
+---
+
 ## [0.1.0] — 2026-03-22
 
 ### Aggiunto

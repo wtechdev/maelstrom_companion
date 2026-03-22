@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script locale per creare il DMG di Maelstrom Companion.
-# Prerequisiti: brew install create-dmg, pip install Pillow
+# Prerequisiti: brew install create-dmg, pip3 install Pillow
 set -e
 
 cd "$(dirname "$0")/.."

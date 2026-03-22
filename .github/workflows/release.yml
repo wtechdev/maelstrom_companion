@@ -11,6 +11,8 @@ permissions:
 jobs:
   build-macos:
     runs-on: macos-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
     steps:
       - name: Checkout
@@ -65,6 +67,16 @@ jobs:
             --app-drop-link 450 190 \
             "${DMG_NAME}" \
             "build/macos/Build/Products/Release/maelstrom_companion.app"
+
+      - name: Verifica DMG generato
+        shell: bash
+        run: |
+          DMG_NAME="${{ steps.dmg_name.outputs.dmg_name }}"
+          if [ ! -f "${DMG_NAME}" ]; then
+            echo "ERRORE: DMG non trovato: ${DMG_NAME}" >&2
+            exit 1
+          fi
+          echo "DMG verificato: $(du -h "${DMG_NAME}" | cut -f1)"
 
       - name: Upload artifact (nightly — solo su push master)
         if: github.ref == 'refs/heads/master'

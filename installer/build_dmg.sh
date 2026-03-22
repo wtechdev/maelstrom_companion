@@ -7,7 +7,7 @@ cd "$(dirname "$0")/.."
 
 VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 DMG_NAME="Maelstrom-Companion-${VERSION}.dmg"
-APP_PATH="build/macos/Build/Products/Release/maelstrom_companion.app"
+APP_PATH="build/macos/Build/Products/Release/Maelstrom Companion.app"
 
 echo "Versione: ${VERSION}"
 echo "DMG: ${DMG_NAME}"
@@ -28,7 +28,7 @@ create-dmg \
   --window-pos 200 120 \
   --window-size 600 400 \
   --icon-size 128 \
-  --icon "maelstrom_companion.app" 150 190 \
+  --icon "Maelstrom Companion.app" 150 190 \
   --app-drop-link 450 190 \
   "${DMG_NAME}" \
   "${APP_PATH}"

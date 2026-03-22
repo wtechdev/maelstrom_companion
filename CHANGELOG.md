@@ -9,6 +9,13 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [0.1.0-beta.4] — 2026-03-22
+
+### Modificato
+- **Nome app**: rinominata da `maelstrom_companion` a `Maelstrom Companion` (bundle, titlebar e Finder)
+
+---
+
 ## [0.1.0-beta.3] — 2026-03-22
 
 ### Corretto

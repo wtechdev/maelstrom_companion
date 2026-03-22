@@ -61,10 +61,10 @@ jobs:
             --window-pos 200 120 \
             --window-size 600 400 \
             --icon-size 128 \
-            --icon "maelstrom_companion.app" 150 190 \
+            --icon "Maelstrom Companion.app" 150 190 \
             --app-drop-link 450 190 \
             "${DMG_NAME}" \
-            "build/macos/Build/Products/Release/maelstrom_companion.app"
+            "build/macos/Build/Products/Release/Maelstrom Companion.app"
 
       - name: Verifica DMG generato
         shell: bash

@@ -51,3 +51,7 @@ installer/dmg_background.png
 
 # DMG generati localmente
 *.dmg
+
+docs/superpowers/plans/
+
+docs/superpowers/specs/

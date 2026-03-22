@@ -45,3 +45,6 @@ app.*.map.json
 # macOS
 /macos/Flutter/GeneratedPluginRegistrant.swift
 /macos/Flutter/ephemeral/
+
+# Generato da installer/generate_background.py
+installer/dmg_background.png

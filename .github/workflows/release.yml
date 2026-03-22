@@ -91,11 +91,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${GITHUB_REF#refs/tags/}"
-          VERSION="${{ steps.dmg_name.outputs.version }}"
+          TAG_NO_V="${TAG#v}"
           DMG_NAME="${{ steps.dmg_name.outputs.dmg_name }}"
-          # Estrai note dalla sezione [Unreleased] del CHANGELOG
-          sed -n '/^## \[Unreleased\]/,/^## \[/p' CHANGELOG.md | head -n -1 > /tmp/release_notes.md
+          python3 installer/extract_changelog.py "$TAG_NO_V" > /tmp/release_notes.md
           gh release create "${TAG}" \
-            --title "v${VERSION}" \
+            --title "${TAG}" \
             --notes-file /tmp/release_notes.md \
             "${DMG_NAME}"

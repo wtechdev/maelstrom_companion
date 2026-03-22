@@ -48,3 +48,6 @@ app.*.map.json
 
 # Generato da installer/generate_background.py
 installer/dmg_background.png
+
+# DMG generati localmente
+*.dmg

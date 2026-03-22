@@ -9,6 +9,13 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [0.1.0-beta.3] — 2026-03-22
+
+### Corretto
+- **CI**: estrazione note CHANGELOG via script Python dedicato (`installer/extract_changelog.py`), risolve incompatibilità `head -n -1` su macOS runner
+
+---
+
 ## [0.1.0-beta.2] — 2026-03-22
 
 ### Aggiunto

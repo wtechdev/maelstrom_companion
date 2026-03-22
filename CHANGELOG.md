@@ -9,6 +9,14 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [0.1.0-beta.5] — 2026-03-22
+
+### Modificato
+- **Sfondo DMG**: sostituito gradiente generato con immagine brandizzata W Tech (Gemini)
+- `generate_background.py` ora ridimensiona `dmg_background_source.png` a 1200×800 invece di generare il gradiente
+
+---
+
 ## [0.1.0-beta.4] — 2026-03-22
 
 ### Modificato

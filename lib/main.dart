@@ -18,7 +18,6 @@ void main() async {
   final windowOptions = WindowOptions(
     size: const Size(AppTheme.windowWidth, AppTheme.windowHeight),
     minimumSize: const Size(AppTheme.windowWidth, AppTheme.windowHeight),
-    maximumSize: const Size(AppTheme.windowWidth, AppTheme.windowHeight),
     center: false,
     backgroundColor: Colors.transparent,
     skipTaskbar: true,
@@ -27,7 +26,7 @@ void main() async {
   );
 
   await windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.setResizable(false);
+    await windowManager.setResizable(true);
     await windowManager.hide();
   });
 
@@ -61,6 +60,9 @@ class _MaelstromAppState extends ConsumerState<MaelstromApp>
 
   @override
   void onTrayIconMouseDown() => TrayManagerService.gestisciClick();
+
+  @override
+  void onTrayIconRightMouseDown() => trayManager.popUpContextMenu();
 
   @override
   void onTrayMenuItemClick(MenuItem menuItem) {

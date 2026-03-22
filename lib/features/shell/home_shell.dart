@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/auth/auth_provider.dart';
 import '../../shared/widgets/frosted_container.dart';
 import '../../shared/widgets/wtech_logo.dart';
 
-class HomeShell extends StatelessWidget {
+class HomeShell extends ConsumerWidget {
   final StatefulNavigationShell shell;
   const HomeShell({super.key, required this.shell});
 
@@ -14,15 +16,22 @@ class HomeShell extends StatelessWidget {
     (label: 'Settimana', icon: Icons.calendar_view_week_outlined),
   ];
 
+  Future<void> _logout(BuildContext context, WidgetRef ref) async {
+    final storage = ref.read(tokenStorageProvider);
+    await storage.cancella();
+    ref.invalidate(authStateProvider);
+    if (context.mounted) context.go('/setup');
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     return FrostedContainer(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
           children: [
-            _LogoHeader(cs: cs),
+            _LogoHeader(cs: cs, onLogout: () => _logout(context, ref)),
             Expanded(child: shell),
           ],
         ),
@@ -52,17 +61,29 @@ class HomeShell extends StatelessWidget {
 
 class _LogoHeader extends StatelessWidget {
   final ColorScheme cs;
-  const _LogoHeader({required this.cs});
+  final VoidCallback onLogout;
+  const _LogoHeader({required this.cs, required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
     // 28px di clearance per i semafori macOS (TitleBarStyle.hidden)
     return Container(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 28, bottom: 8),
+      padding: const EdgeInsets.only(left: 16, right: 4, top: 28, bottom: 8),
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.3))),
       ),
-      child: const WtechLogo(height: 22),
+      child: Row(
+        children: [
+          const Expanded(child: WtechLogo(height: 22)),
+          IconButton(
+            onPressed: onLogout,
+            icon: Icon(Icons.logout, size: 18, color: cs.onSurface.withValues(alpha: 0.45)),
+            tooltip: 'Logout',
+            padding: const EdgeInsets.all(6),
+            constraints: const BoxConstraints(),
+          ),
+        ],
+      ),
     );
   }
 }

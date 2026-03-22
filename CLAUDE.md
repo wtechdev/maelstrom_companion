@@ -43,6 +43,7 @@ flutter pub upgrade
 ## Git & Changelog
 
 - **No auto-commit/push**: Mai eseguire commit o push automatici. L'utente deve approvare esplicitamente ogni operazione.
+- **No auto-push tag/release**: Non eseguire mai `git push`, `git push origin <tag>` o qualsiasi operazione di push (inclusi tag e release) senza esplicita istruzione dell'utente. Questo vale anche dopo commit, tag o build — preparare tutto localmente e attendere il via.
 - **Branch workflow**: Su branch feature/bugfix, aggiornare `CHANGELOG-[branch-name].md` nella root (formato [Keep a Changelog](https://keepachangelog.com/)).
 - **Main workflow**: Su main, aggiornare la sezione `[Unreleased]` di `CHANGELOG.md`.
 - **Merge/PR**: Al merge, integrare il changelog del branch nel `CHANGELOG.md` principale ed eliminare il file temporaneo.

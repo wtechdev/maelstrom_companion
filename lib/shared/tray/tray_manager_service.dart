@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/painting.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
+
+import '../../app_router.dart';
 
 class TrayManagerService {
   static Future<void> init() async {
@@ -9,7 +13,10 @@ class TrayManagerService {
   }
 
   static Menu _buildMenu() => Menu(items: [
-        MenuItem(key: 'toggle', label: 'Apri / Chiudi'),
+        MenuItem(key: 'projects', label: 'Progetti'),
+        MenuItem(key: 'timer', label: 'Registra'),
+        MenuItem(key: 'today', label: 'Oggi'),
+        MenuItem(key: 'week', label: 'Settimana'),
         MenuItem.separator(),
         MenuItem(key: 'quit', label: 'Esci'),
       ]);
@@ -45,10 +52,27 @@ class TrayManagerService {
 
   static Future<void> gestisciMenuClick(String key) async {
     switch (key) {
-      case 'toggle':
-        await gestisciClick();
+      case 'projects':
+        await _mostraENaviga('/home/projects');
+      case 'timer':
+        await _mostraENaviga('/home/timer');
+      case 'today':
+        await _mostraENaviga('/home/today');
+      case 'week':
+        await _mostraENaviga('/home/week');
       case 'quit':
-        await windowManager.close();
+        exit(0);
     }
+  }
+
+  /// Mostra la finestra (se nascosta) e naviga alla route indicata.
+  static Future<void> _mostraENaviga(String route) async {
+    final visible = await windowManager.isVisible();
+    if (!visible) {
+      await _posizionaVicinoTray();
+      await windowManager.show();
+      await windowManager.focus();
+    }
+    routerInstance?.go(route);
   }
 }

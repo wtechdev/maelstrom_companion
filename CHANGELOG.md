@@ -9,6 +9,20 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.0.0] — 2026-03-23
+
+### Aggiunto
+- **Context menu tray**: tasto destro sull'icona menubar mostra menu con voci Progetti, Registra, Oggi, Settimana e Esci
+- **Navigazione da tray**: ogni voce mostra la finestra (se nascosta) e naviga direttamente alla sezione
+- **Pulsante Logout**: icona nell'header dell'app (accanto al logo) per fare logout e tornare alla schermata di setup
+
+### Modificato
+- **Finestra ridimensionabile**: rimosso il vincolo di dimensione massima, la finestra può essere allargata liberamente (minimo 480×580)
+- **Fix Esci**: il tasto "Esci" nel menu tray ora usa `exit(0)` per terminare davvero il processo (prima usava `windowManager.close()` che non chiudeva l'app)
+- **Fix redirect auth**: il redirect GoRouter ora attende il risultato reale del controllo credenziali invece di usare il valore parzialmente caricato, eliminando la race condition che mostrava il login anche con sessione valida
+
+---
+
 ## [0.1.0-beta.5] — 2026-03-22
 
 ### Modificato

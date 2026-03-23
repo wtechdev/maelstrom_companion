@@ -68,6 +68,10 @@ class InfoNotifier extends StateNotifier<InfoState> {
 
   InfoNotifier(this._client) : super(const InfoState());
 
+  /// Costruttore per i test — inizializza con uno stato specifico senza ApiClient.
+  InfoNotifier.withState(super.initialState)
+      : _client = null;
+
   /// Carica profilo + controlla versione. Idempotente (usa flag _checkFatto).
   Future<void> init() async {
     if (_checkFatto) return;

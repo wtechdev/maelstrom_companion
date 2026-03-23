@@ -5,6 +5,14 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.1.2] — 2026-03-23
+
+### Corretto
+- **Auto-update**: script bash ora usa `-mountpoint` con path fisso invece di `awk '{print $NF}'` che spezzava i nomi volume con spazi (es. `Maelstrom Companion 1.1.1`)
+- **Badge aggiornamento**: il check versione avviene all'avvio dell'app (non solo aprendo il tab Info), il pallino rosso appare subito se c'è un aggiornamento disponibile
+
+---
+
 ## [1.1.1] — 2026-03-23
 
 ### Aggiunto

@@ -1,0 +1,143 @@
+<h2>Design schermata "Info" — stati completi</h2>
+<p class="subtitle">La schermata ha 4 stati possibili per la sezione aggiornamento. Conferma se il design ti convince.</p>
+
+<div class="split">
+
+  <!-- Colonna sinistra: struttura generale + stato aggiornato -->
+  <div class="mockup">
+    <div class="mockup-header">Struttura tab + stato "Aggiornato"</div>
+    <div class="mockup-body" style="background:#1c1c1e;font-family:-apple-system,sans-serif;color:#fff;padding:14px;font-size:11px;">
+
+      <!-- Bottom nav con 5 tab -->
+      <div style="margin-bottom:12px;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px;display:flex;justify-content:space-around;align-items:center;">
+        <div style="text-align:center;color:#888;font-size:9px;">
+          <div style="font-size:16px;">📋</div><div>Progetti</div>
+        </div>
+        <div style="text-align:center;color:#888;font-size:9px;">
+          <div style="font-size:16px;">⏱</div><div>Timer</div>
+        </div>
+        <div style="text-align:center;color:#888;font-size:9px;">
+          <div style="font-size:16px;">📅</div><div>Oggi</div>
+        </div>
+        <div style="text-align:center;color:#888;font-size:9px;">
+          <div style="font-size:16px;">📆</div><div>Settimana</div>
+        </div>
+        <div style="text-align:center;color:#e63946;font-size:9px;border-bottom:2px solid #e63946;padding-bottom:2px;">
+          <div style="width:18px;height:18px;background:linear-gradient(135deg,#e63946,#c1121f);border-radius:4px;margin:0 auto 2px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;">W</div>
+          <div>Info</div>
+        </div>
+      </div>
+
+      <!-- Sezione App -->
+      <div style="margin-bottom:10px;">
+        <div style="color:#888;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;padding-left:4px;">App</div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:28px;height:28px;background:linear-gradient(135deg,#e63946,#c1121f);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;">W</div>
+              <div>
+                <div style="font-size:11px;font-weight:600;">Maelstrom Companion</div>
+                <div style="color:#888;font-size:9px;">Versione 1.0.1</div>
+              </div>
+            </div>
+            <!-- Stato: aggiornato -->
+            <div style="background:rgba(52,199,89,0.15);color:#34c759;border-radius:6px;padding:3px 8px;font-size:9px;font-weight:600;">✓ Aggiornato</div>
+          </div>
+          <!-- Pulsante check manuale -->
+          <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.08);text-align:right;">
+            <span style="color:#0a84ff;font-size:9px;cursor:pointer;">Controlla aggiornamenti</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sezione Account -->
+      <div style="margin-bottom:10px;">
+        <div style="color:#888;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;padding-left:4px;">Account</div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:10px;">
+          <div style="font-weight:600;margin-bottom:2px;">Mario Rossi</div>
+          <div style="color:#888;font-size:9px;">mario@demo.local</div>
+          <div style="color:#888;font-size:9px;margin-top:2px;">Ruolo: <span style="color:#aaa;">dipendente</span></div>
+          <div style="color:#888;font-size:9px;margin-top:1px;">Struttura: <span style="color:#aaa;">Azienda Demo A</span></div>
+        </div>
+      </div>
+
+      <!-- Sezione Server -->
+      <div>
+        <div style="color:#888;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;padding-left:4px;">Server</div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:10px;">
+          <div style="color:#aaa;font-size:9px;font-family:monospace;">http://localhost:8080</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Colonna destra: stati update -->
+  <div class="mockup">
+    <div class="mockup-header">Stati sezione aggiornamento</div>
+    <div class="mockup-body" style="background:#1c1c1e;font-family:-apple-system,sans-serif;color:#fff;padding:14px;font-size:11px;display:flex;flex-direction:column;gap:10px;">
+
+      <!-- Stato 1: checking -->
+      <div>
+        <div style="color:#888;font-size:9px;margin-bottom:4px;">① Verifica in corso</div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:14px;height:14px;border:2px solid #0a84ff;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;"></div>
+              <span style="color:#aaa;font-size:10px;">Controllo in corso...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stato 2: update disponibile -->
+      <div>
+        <div style="color:#888;font-size:9px;margin-bottom:4px;">② Nuova versione disponibile</div>
+        <div style="background:rgba(255,149,0,0.1);border:1px solid rgba(255,149,0,0.25);border-radius:10px;padding:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="color:#ff9f0a;font-size:10px;font-weight:600;">v1.0.2 disponibile</div>
+              <div style="color:#888;font-size:9px;margin-top:1px;">Attuale: v1.0.1</div>
+            </div>
+            <div style="background:#ff9f0a;color:#000;border-radius:7px;padding:5px 12px;font-size:9px;font-weight:700;cursor:pointer;">Aggiorna</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stato 3: download in corso -->
+      <div>
+        <div style="color:#888;font-size:9px;margin-bottom:4px;">③ Download in corso</div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:10px;">
+          <div style="color:#aaa;font-size:10px;margin-bottom:6px;">Download v1.0.2... 42%</div>
+          <div style="background:rgba(255,255,255,0.1);border-radius:3px;height:4px;">
+            <div style="width:42%;background:#0a84ff;border-radius:3px;height:4px;"></div>
+          </div>
+          <div style="color:#888;font-size:9px;margin-top:5px;">L'app si riavvierà automaticamente</div>
+        </div>
+      </div>
+
+      <!-- Stato 4: errore -->
+      <div>
+        <div style="color:#888;font-size:9px;margin-bottom:4px;">④ Errore (es. offline)</div>
+        <div style="background:rgba(255,69,58,0.08);border:1px solid rgba(255,69,58,0.2);border-radius:10px;padding:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="color:#ff453a;font-size:10px;">Impossibile controllare aggiornamenti</div>
+            <span style="color:#0a84ff;font-size:9px;cursor:pointer;">Riprova</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>Comportamento update (opzione A)</h3>
+  <p>Clic "Aggiorna" → scarica DMG da GitHub → scrive script bash in <code>/tmp</code> → lancia script → l'app si chiude → lo script aspetta, monta DMG, copia il <code>.app</code>, smonta, rilancia la nuova versione.</p>
+  <p>Il check versione avviene automaticamente all'avvio del tab (una volta per sessione) + manualmente con "Controlla aggiornamenti".</p>
+</div>
+
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+code { background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px; font-size: 10px; }
+</style>

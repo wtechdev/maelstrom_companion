@@ -54,11 +54,14 @@ class TokenStorage {
     });
   }
 
-  /// Cancella le credenziali se la versione memorizzata è diversa da [versioneCorrente].
+  /// Cancella le credenziali se la versione memorizzata è diversa da [versioneCorrente]
+  /// o se non è presente (file salvato prima del versioning).
   /// Chiamare all'avvio prima di verificare le credenziali.
   Future<void> cancellaSeMismatchVersione(String versioneCorrente) async {
+    final hasCreds = await haCredenziali();
+    if (!hasCreds) return; // nessuna credenziale, nulla da fare
     final versioneSalvata = await getVersione();
-    if (versioneSalvata != null && versioneSalvata != versioneCorrente) {
+    if (versioneSalvata != versioneCorrente) {
       debugPrint(
         'TokenStorage: versione cambiata ($versioneSalvata → $versioneCorrente), sessione invalidata.',
       );

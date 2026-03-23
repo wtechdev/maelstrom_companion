@@ -59,14 +59,14 @@ void main() {
       );
     });
 
-    test('non cancella se versione salvata è null (file vecchio senza campo versione)', () async {
+    test('cancella se versione salvata è null (file vecchio senza campo versione)', () async {
       // Simula un file di credenziali precedente al versioning
       await File('${tmpDir.path}/maelstrom_credentials.json').writeAsString(
         jsonEncode({'url': 'https://example.com', 'token': 'tok'}),
       );
-      await storage.cancellaSeMismatchVersione('1.1.4');
-      // Le credenziali rimangono — retrocompatibilità con sessioni pre-versioning
-      expect(await storage.haCredenziali(), isTrue);
+      await storage.cancellaSeMismatchVersione('1.1.5');
+      // Credenziali cancellate — sessioni pre-versioning vanno invalidate
+      expect(await storage.haCredenziali(), isFalse);
     });
   });
 }

@@ -5,6 +5,14 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.1.6] — 2026-03-23
+
+### Corretto
+- **Isolamento sessione**: la sessione ora viene invalidata correttamente anche quando il file credenziali non contiene il campo versione (sessioni salvate con versioni precedenti alla 1.1.5)
+- **Profilo tab Info**: il profilo utente ora viene caricato correttamente all'avvio — il client API veniva letto prima che terminasse l'inizializzazione, restituendo null
+
+---
+
 ## [1.1.5] — 2026-03-23
 
 ### Aggiunto

@@ -1,0 +1,112 @@
+<h2>Design del tab "Profilo / Info"</h2>
+<p class="subtitle">Come organizzare le informazioni nel nuovo tab. Seleziona il layout che preferisci.</p>
+
+<div class="cards">
+
+  <!-- Opzione A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;padding:16px;font-family:-apple-system,sans-serif;color:#fff;border-radius:8px 8px 0 0;">
+      <!-- Mock app window -->
+      <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:16px;font-size:11px;">
+        <!-- Logo centrato + versione -->
+        <div style="text-align:center;margin-bottom:14px;">
+          <div style="width:40px;height:40px;background:linear-gradient(135deg,#e63946,#c1121f);border-radius:10px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;">W</div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">Maelstrom Companion</div>
+          <div style="color:#888;font-size:10px;margin-top:2px;">v1.0.1</div>
+        </div>
+        <!-- Utente -->
+        <div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:10px;margin-bottom:8px;">
+          <div style="color:#aaa;font-size:9px;text-transform:uppercase;margin-bottom:4px;">Utente</div>
+          <div style="font-weight:600;">Mario Rossi</div>
+          <div style="color:#888;font-size:10px;">mario@demo.local · dipendente</div>
+        </div>
+        <!-- Update badge -->
+        <div style="background:rgba(99,210,99,0.15);border:1px solid rgba(99,210,99,0.3);border-radius:8px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="color:#6fd96f;font-size:10px;">✓ Sei aggiornato</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Compatto centrato</h3>
+      <p>Logo + versione in cima, info utente come card, stato update in fondo. Pulito e simile alle app macOS native.</p>
+    </div>
+  </div>
+
+  <!-- Opzione B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;padding:16px;font-family:-apple-system,sans-serif;color:#fff;border-radius:8px 8px 0 0;">
+      <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;font-size:11px;">
+        <!-- Header con logo inline -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.1);">
+          <div style="width:32px;height:32px;background:linear-gradient(135deg,#e63946,#c1121f);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">W</div>
+          <div>
+            <div style="font-weight:700;font-size:12px;">Maelstrom Companion</div>
+            <div style="color:#888;font-size:9px;">v1.0.1 · W Tech</div>
+          </div>
+        </div>
+        <!-- Row utente -->
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#4f8ef7,#7c5cbf);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;">MR</div>
+          <div>
+            <div style="font-weight:600;font-size:11px;">Mario Rossi</div>
+            <div style="color:#888;font-size:9px;">mario@demo.local</div>
+            <div style="color:#aaa;font-size:9px;">Ruolo: dipendente</div>
+          </div>
+        </div>
+        <!-- Update disponibile -->
+        <div style="background:rgba(255,149,0,0.15);border:1px solid rgba(255,149,0,0.4);border-radius:8px;padding:8px 10px;margin-top:8px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="color:#ff9500;font-size:10px;font-weight:600;">Nuova versione: v1.0.2</div>
+              <div style="color:#888;font-size:9px;">Disponibile su GitHub</div>
+            </div>
+            <div style="background:#ff9500;color:#000;border-radius:6px;padding:4px 10px;font-size:9px;font-weight:700;">Aggiorna</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Lista con avatar</h3>
+      <p>Header orizzontale, avatar iniziali per l'utente, update badge con pulsante inline. Più denso di informazioni.</p>
+    </div>
+  </div>
+
+  <!-- Opzione C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;padding:16px;font-family:-apple-system,sans-serif;color:#fff;border-radius:8px 8px 0 0;">
+      <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;font-size:11px;">
+        <!-- Sezioni separate -->
+        <div style="margin-bottom:10px;">
+          <div style="color:#aaa;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">App</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:24px;height:24px;background:linear-gradient(135deg,#e63946,#c1121f);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;">W</div>
+              <div>
+                <div style="font-size:11px;font-weight:600;">Maelstrom Companion</div>
+                <div style="color:#888;font-size:9px;">Versione 1.0.1</div>
+              </div>
+            </div>
+            <div style="background:rgba(99,210,99,0.2);color:#6fd96f;border-radius:4px;padding:2px 6px;font-size:8px;">✓ Aggiornato</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:10px;margin-bottom:10px;">
+          <div style="color:#aaa;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Account</div>
+          <div style="font-weight:600;">Mario Rossi</div>
+          <div style="color:#888;font-size:9px;margin-top:2px;">mario@demo.local</div>
+          <div style="color:#888;font-size:9px;">Ruolo: dipendente · Struttura: Azienda Demo A</div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
+          <div style="color:#aaa;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Server</div>
+          <div style="color:#888;font-size:9px;">http://localhost:8080</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Sezioni distinte</h3>
+      <p>Tre sezioni separate: App, Account, Server. Più informazioni (struttura, URL server). Stile Settings-like.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Nota: in tutti i casi l'icona del tab sarà il logo W-Tech (o un'icona person/info). Clicca per selezionare, poi rispondi nel terminale.</p>

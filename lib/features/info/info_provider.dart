@@ -118,8 +118,11 @@ class InfoNotifier extends StateNotifier<InfoState> {
 
   Future<void> _caricaProfilo() async {
     try {
-      // Legge il client in modo lazy — non dipende dall'ordine di inizializzazione
-      final client = _ref?.read(apiClientProvider).valueOrNull;
+      final ref = _ref;
+      if (ref == null) return;
+      // Attende che il client sia disponibile invece di usare valueOrNull
+      // (che restituirebbe null se ancora in caricamento all'avvio)
+      final client = await ref.read(apiClientProvider.future);
       if (client == null) return;
       final profilo = await client.getProfilo();
       final serverUrl = client.baseUrl;

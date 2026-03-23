@@ -5,6 +5,13 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.1.4] — 2026-03-23
+
+### Corretto
+- **Badge aggiornamento**: il check versione ora avviene davvero all'avvio dell'app — il `infoProvider` non dipende più da `apiClientProvider` nella factory, quindi non viene ricreato quando il client termina di caricarsi (il che azzerava stato e flag `_checkFatto`, rendendo il check effettivo solo alla prima apertura del tab Info)
+
+---
+
 ## [1.1.3] — 2026-03-23
 
 ### Corretto

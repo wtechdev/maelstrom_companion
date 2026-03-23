@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../../core/api/api_client.dart';
 import '../../core/auth/auth_provider.dart';
 import '../../core/models/user_profile.dart';
 import '../../core/utils/version_utils.dart';
@@ -65,14 +64,13 @@ class InfoState {
 
 /// Notifier per il tab Info: gestisce profilo utente e check aggiornamenti.
 class InfoNotifier extends StateNotifier<InfoState> {
-  final ApiClient? _client;
+  final Ref? _ref;
   bool _checkFatto = false;
 
-  InfoNotifier(this._client) : super(const InfoState());
+  InfoNotifier(Ref ref) : _ref = ref, super(const InfoState());
 
-  /// Costruttore per i test — inizializza con uno stato specifico senza ApiClient.
-  InfoNotifier.withState(super.initialState)
-      : _client = null;
+  /// Costruttore per i test — inizializza con uno stato specifico senza Ref.
+  InfoNotifier.withState(super.initialState) : _ref = null;
 
   /// Carica profilo + controlla versione. Idempotente (usa flag _checkFatto).
   Future<void> init() async {
@@ -120,9 +118,11 @@ class InfoNotifier extends StateNotifier<InfoState> {
 
   Future<void> _caricaProfilo() async {
     try {
-      if (_client == null) return;
-      final profilo = await _client.getProfilo();
-      final serverUrl = _client.baseUrl;
+      // Legge il client in modo lazy — non dipende dall'ordine di inizializzazione
+      final client = _ref?.read(apiClientProvider).valueOrNull;
+      if (client == null) return;
+      final profilo = await client.getProfilo();
+      final serverUrl = client.baseUrl;
       state = state.copyWith(profilo: profilo, serverUrl: serverUrl);
     } catch (_) {
       // Profilo non disponibile: sezione Account mostrerà "Non disponibile"
@@ -197,9 +197,8 @@ class InfoNotifier extends StateNotifier<InfoState> {
   }
 }
 
+// Provider creato una sola volta — non dipende da apiClientProvider,
+// quindi non viene mai ricreato quando il client si carica.
 final infoProvider = StateNotifierProvider<InfoNotifier, InfoState>(
-  (ref) {
-    final client = ref.watch(apiClientProvider).valueOrNull;
-    return InfoNotifier(client);
-  },
+  (ref) => InfoNotifier(ref),
 );

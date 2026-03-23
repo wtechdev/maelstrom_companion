@@ -5,6 +5,13 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.1.1] — 2026-03-23
+
+### Aggiunto
+- **Badge aggiornamento**: pallino rosso sull'icona Info nella navigation bar quando è disponibile una nuova versione
+
+---
+
 ## [1.1.0] — 2026-03-23
 
 ### Aggiunto

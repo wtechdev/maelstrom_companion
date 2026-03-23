@@ -101,6 +101,8 @@ class _AppSection extends ConsumerWidget {
             _DownloadProgress(state: state, cs: cs),
           if (state.updateStatus == UpdateStatus.updateAvailable)
             _UpdateAvailableRow(state: state, cs: cs),
+          if (state.updateStatus == UpdateStatus.error)
+            _ErrorRow(errore: state.errore, cs: cs),
           const Divider(height: 16, thickness: 0.5),
           Align(
             alignment: Alignment.centerRight,
@@ -150,7 +152,7 @@ class _UpdateBadge extends StatelessWidget {
           ),
         );
       case UpdateStatus.error:
-        return _ErrorRow(errore: state.errore, cs: cs);
+        return const Icon(Icons.error_outline, color: Colors.red, size: 18);
       default:
         return const SizedBox.shrink();
     }

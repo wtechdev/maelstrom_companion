@@ -133,6 +133,12 @@ class InfoNotifier extends StateNotifier<InfoState> {
         return;
       }
 
+      // 404 = nessuna release pubblicata → app già aggiornata
+      if (response.statusCode == 404) {
+        state = state.copyWith(updateStatus: UpdateStatus.upToDate);
+        return;
+      }
+
       if (response.statusCode != 200) {
         state = state.copyWith(
           updateStatus: UpdateStatus.error,

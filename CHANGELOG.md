@@ -5,7 +5,10 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
-## [Unreleased]
+## [1.0.1] — 2026-03-23
+
+### Corretto
+- **Vista settimanale**: le ore per singolo progetto non venivano mostrate (compariva "-") a causa di una regressione nell'API backend che restituiva oggetti invece di valori numerici
 
 ---
 

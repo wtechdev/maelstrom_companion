@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'core/auth/auth_provider.dart';
+import 'features/info/info_screen.dart';
 import 'features/projects/projects_screen.dart';
 import 'features/setup/setup_screen.dart';
 import 'features/shell/home_shell.dart';
@@ -33,6 +34,7 @@ GoRouter appRouter(WidgetRef ref) {
           StatefulShellBranch(routes: [GoRoute(path: '/home/timer', builder: (ctx, s) => const TimerScreen())]),
           StatefulShellBranch(routes: [GoRoute(path: '/home/today', builder: (ctx, s) => const TimesheetScreen())]),
           StatefulShellBranch(routes: [GoRoute(path: '/home/week', builder: (ctx, s) => const WeekScreen())]),
+          StatefulShellBranch(routes: [GoRoute(path: '/home/info', builder: (ctx, s) => const InfoScreen())]),
         ],
       ),
     ],

@@ -51,6 +51,13 @@ class HomeShell extends ConsumerWidget {
                     onTap: () => shell.goBranch(i, initialLocation: i == shell.currentIndex),
                   ),
                 ),
+              Expanded(
+                child: _LogoTabItem(
+                  label: 'Info',
+                  selected: shell.currentIndex == 4,
+                  onTap: () => shell.goBranch(4, initialLocation: 4 == shell.currentIndex),
+                ),
+              ),
             ],
           ),
         ),
@@ -105,6 +112,40 @@ class _TabItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, size: 22, color: color),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              color: color,
+              fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LogoTabItem extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+  const _LogoTabItem({required this.label, required this.selected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final color = selected ? cs.primary : cs.onSurface.withValues(alpha: 0.5);
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+            child: const WtechLogo(height: 22, brandmarkOnly: true),
+          ),
           const SizedBox(height: 2),
           Text(
             label,

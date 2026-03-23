@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/auth/auth_provider.dart';
+import '../../features/info/info_provider.dart';
 import '../../shared/widgets/frosted_container.dart';
 import '../../shared/widgets/wtech_logo.dart';
 
@@ -127,24 +128,43 @@ class _TabItem extends StatelessWidget {
   }
 }
 
-class _LogoTabItem extends StatelessWidget {
+class _LogoTabItem extends ConsumerWidget {
   final String label;
   final bool selected;
   final VoidCallback onTap;
   const _LogoTabItem({required this.label, required this.selected, required this.onTap});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cs = Theme.of(context).colorScheme;
     final color = selected ? cs.primary : cs.onSurface.withValues(alpha: 0.5);
+    final hasUpdate = ref.watch(infoProvider).updateStatus == UpdateStatus.updateAvailable;
     return InkWell(
       onTap: onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ColorFiltered(
-            colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-            child: const WtechLogo(height: 22, brandmarkOnly: true),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              ColorFiltered(
+                colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+                child: const WtechLogo(height: 22, brandmarkOnly: true),
+              ),
+              if (hasUpdate)
+                Positioned(
+                  top: -3,
+                  right: -5,
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+            ],
           ),
           const SizedBox(height: 2),
           Text(

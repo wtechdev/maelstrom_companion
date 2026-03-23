@@ -6,10 +6,15 @@ import '../../features/info/info_provider.dart';
 import '../../shared/widgets/frosted_container.dart';
 import '../../shared/widgets/wtech_logo.dart';
 
-class HomeShell extends ConsumerWidget {
+class HomeShell extends ConsumerStatefulWidget {
   final StatefulNavigationShell shell;
   const HomeShell({super.key, required this.shell});
 
+  @override
+  ConsumerState<HomeShell> createState() => _HomeShellState();
+}
+
+class _HomeShellState extends ConsumerState<HomeShell> {
   static const _tabs = [
     (label: 'Progetto', icon: Icons.folder_outlined),
     (label: 'Registra', icon: Icons.play_circle_outline),
@@ -17,7 +22,14 @@ class HomeShell extends ConsumerWidget {
     (label: 'Settimana', icon: Icons.calendar_view_week_outlined),
   ];
 
-  Future<void> _logout(BuildContext context, WidgetRef ref) async {
+  @override
+  void initState() {
+    super.initState();
+    // Avvia il check aggiornamenti subito, così il badge appare senza aprire il tab Info
+    Future.microtask(() => ref.read(infoProvider.notifier).init());
+  }
+
+  Future<void> _logout(BuildContext context) async {
     final storage = ref.read(tokenStorageProvider);
     await storage.cancella();
     ref.invalidate(authStateProvider);
@@ -25,14 +37,15 @@ class HomeShell extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final shell = widget.shell;
     return FrostedContainer(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
           children: [
-            _LogoHeader(cs: cs, onLogout: () => _logout(context, ref)),
+            _LogoHeader(cs: cs, onLogout: () => _logout(context)),
             Expanded(child: shell),
           ],
         ),

@@ -16,6 +16,7 @@ void main() {
       expect(script, contains('MAELSTROM_DMG_PATH'));
       expect(script, contains('MAELSTROM_APP_DEST'));
       expect(script, contains('hdiutil'));
+      expect(script, contains('-mountpoint'));
       expect(script, contains('ditto'));
     });
   });

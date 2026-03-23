@@ -22,22 +22,25 @@ class UpdateService {
   /// Genera il contenuto dello script bash di aggiornamento.
   /// I path vengono passati come variabili di ambiente, non interpolati inline.
   static String generaScript() {
-    return '''#!/bin/bash
-DMG_PATH="\${MAELSTROM_DMG_PATH}"
-APP_DEST="\${MAELSTROM_APP_DEST}"
+    return r'''#!/bin/bash
+DMG_PATH="${MAELSTROM_DMG_PATH}"
+APP_DEST="${MAELSTROM_APP_DEST}"
+MOUNT_POINT="/tmp/maelstrom_mount_$$"
 
 sleep 2
 
-MOUNT=\$(hdiutil attach "\$DMG_PATH" -nobrowse -quiet | tail -1 | awk '{print \$NF}')
+mkdir -p "$MOUNT_POINT"
+hdiutil attach "$DMG_PATH" -nobrowse -quiet -mountpoint "$MOUNT_POINT"
 
-rm -rf "\$APP_DEST"
-ditto "\$MOUNT/Maelstrom Companion.app" "\$APP_DEST"
+rm -rf "$APP_DEST"
+ditto "$MOUNT_POINT/Maelstrom Companion.app" "$APP_DEST"
 
-hdiutil detach "\$MOUNT" -quiet
-open "\$APP_DEST"
+hdiutil detach "$MOUNT_POINT" -quiet
+open "$APP_DEST"
 
-rm -f "\$DMG_PATH"
-rm -f "\$0"
+rm -rf "$MOUNT_POINT"
+rm -f "$DMG_PATH"
+rm -f "$0"
 ''';
   }
 

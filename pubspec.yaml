@@ -1,7 +1,7 @@
 name: maelstrom_companion
 description: "Companion app macOS per Maelstrom — timesheet e timer dalla menubar."
 publish_to: 'none'
-version: 1.0.1+2
+version: 1.1.0+3
 
 environment:
   sdk: ^3.10.8

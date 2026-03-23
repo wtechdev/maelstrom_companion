@@ -5,6 +5,22 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.1.0] — 2026-03-23
+
+### Aggiunto
+- **Tab Info**: quinto tab nella navigation bar con icona W-Tech brandmark
+- **Sezione App**: versione installata e stato aggiornamenti con 5 stati (verifica in corso, aggiornato, nuova versione disponibile, download in corso, errore)
+- **Sezione Account**: nome completo, email, ruolo e struttura dell'utente autenticato
+- **Sezione Server**: URL del server configurato
+- **Auto-update**: check automatico all'apertura del tab (una volta per sessione) via GitHub Releases API; check manuale tramite link "Controlla aggiornamenti"
+- **Meccanismo aggiornamento**: download DMG + script bash in `/tmp` con path come variabili di ambiente (no shell injection), utilizzo di `ditto` per bundle macOS
+- **`package_info_plus`**: lettura versione installata a runtime
+
+### Corretto
+- HTTP 404 da GitHub Releases trattato come "Aggiornato" (nessuna release disponibile) invece di errore
+
+---
+
 ## [1.0.1] — 2026-03-23
 
 ### Corretto

@@ -9,9 +9,15 @@ import 'package:path_provider/path_provider.dart';
 class TokenStorage {
   static const _fileName = 'maelstrom_credentials.json';
 
+  /// Percorso directory opzionale — usato solo nei test per isolare il filesystem.
+  @visibleForTesting
+  final String? dirOverride;
+
+  const TokenStorage({this.dirOverride});
+
   Future<File> _file() async {
-    final dir = await getApplicationSupportDirectory();
-    return File('${dir.path}/$_fileName');
+    final dirPath = dirOverride ?? (await getApplicationSupportDirectory()).path;
+    return File('$dirPath/$_fileName');
   }
 
   Future<Map<String, String>> _leggi() async {
@@ -34,12 +40,30 @@ class TokenStorage {
 
   Future<String?> getUrl() async => (await _leggi())['url'];
   Future<String?> getToken() async => (await _leggi())['token'];
+  Future<String?> getVersione() async => (await _leggi())['versione'];
 
-  Future<void> salva({required String url, required String token}) async {
+  Future<void> salva({
+    required String url,
+    required String token,
+    required String versione,
+  }) async {
     await _scrivi({
       'url': url.trimRight().replaceAll(RegExp(r'/$'), ''),
       'token': token.trim(),
+      'versione': versione,
     });
+  }
+
+  /// Cancella le credenziali se la versione memorizzata è diversa da [versioneCorrente].
+  /// Chiamare all'avvio prima di verificare le credenziali.
+  Future<void> cancellaSeMismatchVersione(String versioneCorrente) async {
+    final versioneSalvata = await getVersione();
+    if (versioneSalvata != null && versioneSalvata != versioneCorrente) {
+      debugPrint(
+        'TokenStorage: versione cambiata ($versioneSalvata → $versioneCorrente), sessione invalidata.',
+      );
+      await cancella();
+    }
   }
 
   Future<bool> haCredenziali() async {

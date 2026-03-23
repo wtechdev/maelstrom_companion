@@ -5,6 +5,14 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.1.5] — 2026-03-23
+
+### Aggiunto
+- **Isolamento sessione per versione**: credenziali invalidate automaticamente al cambio di versione dell'app — versioni diverse dello stesso software sulla stessa macchina richiedono una nuova autenticazione
+- La versione viene salvata nel file `maelstrom_credentials.json` al momento del login e verificata ad ogni avvio
+
+---
+
 ## [1.1.4] — 2026-03-23
 
 ### Corretto

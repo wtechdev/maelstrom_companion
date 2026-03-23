@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../core/api/api_client.dart';
 import '../../core/api/api_exception.dart';
 import '../../core/auth/auth_provider.dart';
@@ -56,7 +57,8 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       );
       final token = (risposta['data'] as Map<String, dynamic>)['token'] as String;
       final storage = ref.read(tokenStorageProvider);
-      await storage.salva(url: url, token: token);
+      final pkgInfo = await PackageInfo.fromPlatform();
+      await storage.salva(url: url, token: token, versione: pkgInfo.version);
       ref.invalidate(authStateProvider);
       ref.invalidate(apiClientProvider);
       await ref.read(authStateProvider.future);

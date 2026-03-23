@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,7 @@ import '../../core/api/api_client.dart';
 import '../../core/auth/auth_provider.dart';
 import '../../core/models/user_profile.dart';
 import '../../core/utils/version_utils.dart';
+import 'update_service.dart';
 
 /// Stato del check aggiornamenti.
 enum UpdateStatus { idle, checking, upToDate, updateAvailable, downloading, error }
@@ -95,6 +97,25 @@ class InfoNotifier extends StateNotifier<InfoState> {
 
   void impostaErrore(String msg) {
     state = state.copyWith(updateStatus: UpdateStatus.error, errore: msg);
+  }
+
+  /// [DEBUG] Simula aggiornamento disponibile e lancia lo script con un DMG locale.
+  Future<void> debugAggiornamentoDmgLocale(String dmgPath) async {
+    final appPath = UpdateService.appInstallPath;
+    state = state.copyWith(
+      updateStatus: UpdateStatus.downloading,
+      downloadProgress: 1.0,
+      nuovaVersione: 'debug',
+    );
+    try {
+      await UpdateService().testAggiornamentoDmgLocale(
+        dmgPath: dmgPath,
+        appPath: appPath,
+      );
+      exit(0);
+    } catch (e) {
+      state = state.copyWith(updateStatus: UpdateStatus.error, errore: 'Debug update fallito: $e');
+    }
   }
 
   Future<void> _caricaProfilo() async {

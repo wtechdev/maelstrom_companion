@@ -5,6 +5,15 @@ Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/).
 
 ---
 
+## [1.1.3] — 2026-03-23
+
+### Corretto
+- **Auto-update script**: `ditto` ora copia in posizione temporanea prima di rimuovere la vecchia app — se la copia fallisce l'app originale rimane intatta
+- **Auto-update script**: verifica del bundle copiato usa il nome eseguibile corretto (`Maelstrom Companion` con spazio e maiuscole)
+- **Auto-update script**: aggiunto logging verboso (`set -xe`) e `set -e` per interrompere lo script al primo errore
+
+---
+
 ## [1.1.2] — 2026-03-23
 
 ### Corretto

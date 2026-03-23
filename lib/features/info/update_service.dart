@@ -23,24 +23,51 @@ class UpdateService {
   /// I path vengono passati come variabili di ambiente, non interpolati inline.
   static String generaScript() {
     return r'''#!/bin/bash
+LOG="/tmp/maelstrom_updater.log"
+exec > "$LOG" 2>&1
+set -xe
+
 DMG_PATH="${MAELSTROM_DMG_PATH}"
 APP_DEST="${MAELSTROM_APP_DEST}"
 MOUNT_POINT="/tmp/maelstrom_mount_$$"
+TEMP_APP="/tmp/MaelstromCompanion_new_$$.app"
+
+echo "=== Maelstrom Updater avviato ==="
+echo "DMG:  $DMG_PATH"
+echo "DEST: $APP_DEST"
 
 sleep 2
 
 mkdir -p "$MOUNT_POINT"
 hdiutil attach "$DMG_PATH" -nobrowse -quiet -mountpoint "$MOUNT_POINT"
+echo "Contenuto DMG:"
+ls "$MOUNT_POINT"
 
+# Copia in posizione temporanea — se fallisce l'app originale è ancora intatta
+ditto "$MOUNT_POINT/Maelstrom Companion.app" "$TEMP_APP"
+
+# Verifica che la copia contenga l'eseguibile
+if [ ! -f "$TEMP_APP/Contents/MacOS/Maelstrom Companion" ]; then
+  echo "ERRORE: bundle copiato non valido"
+  rm -rf "$TEMP_APP"
+  hdiutil detach "$MOUNT_POINT" -force -quiet
+  exit 1
+fi
+echo "Bundle verificato OK"
+
+# Ora è sicuro rimuovere la vecchia versione e spostare quella nuova
 rm -rf "$APP_DEST"
-ditto "$MOUNT_POINT/Maelstrom Companion.app" "$APP_DEST"
+mv "$TEMP_APP" "$APP_DEST"
 
-hdiutil detach "$MOUNT_POINT" -quiet
+hdiutil detach "$MOUNT_POINT" -force -quiet
+rm -rf "$MOUNT_POINT"
+
+echo "Lancio app: $APP_DEST"
 open "$APP_DEST"
 
-rm -rf "$MOUNT_POINT"
 rm -f "$DMG_PATH"
 rm -f "$0"
+echo "=== Fine ==="
 ''';
   }
 
@@ -77,6 +104,12 @@ rm -f "$0"
       client.close();
     }
   }
+
+  /// [DEBUG] Testa l'aggiornamento direttamente da un DMG locale, senza download.
+  Future<void> testAggiornamentoDmgLocale({
+    required String dmgPath,
+    required String appPath,
+  }) => avviaAggiornamento(dmgPath: dmgPath, appPath: appPath);
 
   /// Scrive lo script bash in /tmp e lo avvia con le variabili di ambiente.
   Future<void> avviaAggiornamento({

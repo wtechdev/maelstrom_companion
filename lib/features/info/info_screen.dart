@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -46,6 +47,11 @@ class _InfoScreenState extends ConsumerState<InfoScreen> {
           _SectionLabel('Server', cs),
           const SizedBox(height: 6),
           _ServerSection(serverUrl: state.serverUrl, cs: cs),
+          // Sezione debug — visibile solo in modalità debug
+          if (kDebugMode) ...[
+            const SizedBox(height: 24),
+            _DebugSection(cs: cs),
+          ],
         ],
       ),
     );
@@ -456,6 +462,143 @@ class _SectionBox extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(12),
       child: child,
+    );
+  }
+}
+
+// ─── Sezione Debug (solo kDebugMode) ───────────────────────────────────────────
+
+class _DebugSection extends ConsumerStatefulWidget {
+  final ColorScheme cs;
+  const _DebugSection({required this.cs});
+
+  @override
+  ConsumerState<_DebugSection> createState() => _DebugSectionState();
+}
+
+class _DebugSectionState extends ConsumerState<_DebugSection> {
+  final _controller = TextEditingController(
+    text: '/tmp/MaelstromCompanion-debug.dmg',
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionLabel('DEBUG', widget.cs),
+        const SizedBox(height: 6),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.orange.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Test aggiornamento da DMG locale',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: widget.cs.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _controller,
+                style: const TextStyle(fontSize: 11, fontFamily: 'monospace'),
+                decoration: InputDecoration(
+                  hintText: '/path/to/MaelstromCompanion.dmg',
+                  hintStyle: TextStyle(
+                    fontSize: 11,
+                    color: widget.cs.onSurface.withValues(alpha: 0.3),
+                  ),
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      final path = _controller.text.trim();
+                      if (path.isNotEmpty) {
+                        ref.read(infoProvider.notifier).debugAggiornamentoDmgLocale(path);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+                    ),
+                    child: const Text('Avvia update'),
+                  ),
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: () async {
+                      final log = File('/tmp/maelstrom_updater.log');
+                      if (await log.exists()) {
+                        final content = await log.readAsString();
+                        if (context.mounted) {
+                          showDialog<void>(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: const Text('updater.log'),
+                              content: SingleChildScrollView(
+                                child: Text(
+                                  content,
+                                  style: const TextStyle(fontSize: 10, fontFamily: 'monospace'),
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Chiudi'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Nessun log trovato')),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(
+                      'Vedi log',
+                      style: TextStyle(color: widget.cs.primary, fontSize: 11),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'App path: ${UpdateService.appInstallPath}',
+                style: TextStyle(
+                  fontSize: 9,
+                  fontFamily: 'monospace',
+                  color: widget.cs.onSurface.withValues(alpha: 0.4),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -5,6 +5,7 @@ import '../models/pending_timer_entry.dart';
 import '../models/project.dart';
 import '../models/timesheet_entry.dart';
 import '../models/timer_status.dart';
+import '../models/user_profile.dart';
 import '../models/week_summary.dart';
 
 class ApiClient {
@@ -78,7 +79,11 @@ class ApiClient {
     throw ApiException(statusCode: response.statusCode, message: msg);
   }
 
-  Future<Map<String, dynamic>> getProfilo() => _get('/api/v1/me');
+  /// Restituisce il profilo dell'utente autenticato.
+  Future<UserProfile> getProfilo() async {
+    final response = await _get('/api/v1/me');
+    return UserProfile.fromJson(response);
+  }
 
   Future<List<Project>> getProjects() async {
     final data = await _get('/api/v1/me/projects');
